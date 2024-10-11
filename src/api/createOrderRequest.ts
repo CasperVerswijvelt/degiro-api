@@ -1,44 +1,51 @@
 // Import types
-import { OrderType, AccountDataType, AccountConfigType, CreateOrderResultType } from '../types'
+import { OrderType, CreateOrderResultType } from "../types";
 
 // Import Consts
-import { DEGIRO_API_PATHS } from '../enums'
-const { CREATE_ORDER_PATH } = DEGIRO_API_PATHS
+import { DEGIRO_API_PATHS } from "../enums";
+const { CREATE_ORDER_PATH } = DEGIRO_API_PATHS;
 
 // Import debug console log
-import { debug, fetch } from '../utils'
+import { debug, fetch } from "../utils";
+import { DeGiro } from "../DeGiro";
 
-
-export function createOrderRequest(order: OrderType, accountData: AccountDataType, accountConfig: AccountConfigType): Promise<CreateOrderResultType> {
+export function createOrderRequest(
+  order: OrderType,
+  { accountData, accountConfig, userAgent }: DeGiro
+): Promise<CreateOrderResultType> {
   return new Promise((resolve, reject) => {
-
     const requestOptions: {
-      method?: string,
-      body?: string,
+      method?: string;
+      body?: string;
       headers: {
-        [key: string]: string,
-      },
-      credentials: 'include',
-      referer: string,
+        [key: string]: string;
+      };
+      credentials: "include";
+      referer: string;
     } = {
-      method: 'POST',
+      method: "POST",
       headers: {
-        'Content-Type': 'application/json;charset=UTF-8',
+        "Content-Type": "application/json;charset=UTF-8",
       },
       body: JSON.stringify(order),
-      credentials: 'include',
-      referer: 'https://trader.degiro.nl/trader/',
-    }
+      credentials: "include",
+      referer: "https://trader.degiro.nl/trader/",
+    };
 
-    const uri = `${accountConfig.data.tradingUrl}${CREATE_ORDER_PATH};jsessionid=${accountConfig.data.sessionId}?intAccount=${accountData.data.intAccount}&sessionId=${accountConfig.data.sessionId}`
-    debug(uri, requestOptions)
-    fetch(uri, requestOptions)
-      .then(res => res.json())
+    const uri = `${
+      accountConfig!.data.tradingUrl
+    }${CREATE_ORDER_PATH};jsessionid=${
+      accountConfig!.data.sessionId
+    }?intAccount=${accountData!!.data.intAccount}&sessionId=${
+      accountConfig!.data.sessionId
+    }`;
+    debug(uri, requestOptions);
+    fetch(uri, requestOptions, userAgent)
+      .then((res) => res.json())
       .then((res) => {
-        if (res.errors) return reject(res.errors)
-        resolve(res.data)
+        if (res.errors) return reject(res.errors);
+        resolve(res.data);
       })
-      .catch(reject)
-
-  })
+      .catch(reject);
+  });
 }

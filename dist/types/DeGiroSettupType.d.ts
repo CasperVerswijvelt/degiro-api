@@ -3,5 +3,6 @@ export declare type DeGiroSettupType = {
     pwd?: string;
     oneTimePassword?: string;
     jsessionId?: string;
+    userAgent?: string;
 };
 //# sourceMappingURL=DeGiroSettupType.d.ts.map

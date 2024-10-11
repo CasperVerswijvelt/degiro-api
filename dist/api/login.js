@@ -6,7 +6,8 @@ var enums_1 = require("../enums");
 var BASE_API_URL = enums_1.DEGIRO_API_PATHS.BASE_API_URL, LOGIN_URL_PATH = enums_1.DEGIRO_API_PATHS.LOGIN_URL_PATH;
 // Import debug console log
 var utils_1 = require("../utils");
-function loginRequest(params) {
+function loginRequest(_a, params) {
+    var userAgent = _a.userAgent;
     return new Promise(function (resolve, reject) {
         // Make the payload
         var payload = {
@@ -16,33 +17,33 @@ function loginRequest(params) {
             username: params.username.toLowerCase().trim(),
             oneTimePassword: params.oneTimePassword,
             queryParams: {
-                reason: 'session_expired',
+                reason: "session_expired",
             },
         };
         var requestOptions = {
-            method: 'POST',
+            method: "POST",
             body: JSON.stringify(payload),
             headers: {
-                'Content-Type': 'application/json',
+                "Content-Type": "application/json",
             },
-            credentials: 'include',
-            referer: 'https://trader.degiro.nl/trader/',
+            credentials: "include",
+            referer: "https://trader.degiro.nl/trader/",
         };
         // Do the request to get a session
         utils_1.debug("Making request to " + BASE_API_URL + LOGIN_URL_PATH + " with options:");
         utils_1.debug(JSON.stringify(requestOptions, null, 2));
-        utils_1.fetch("" + BASE_API_URL + LOGIN_URL_PATH, requestOptions)
+        utils_1.fetch("" + BASE_API_URL + LOGIN_URL_PATH, requestOptions, userAgent)
             .then(function (res) {
             if (!payload.oneTimePassword)
                 return res;
-            utils_1.debug('Sending OTP');
-            return utils_1.fetch("" + BASE_API_URL + LOGIN_URL_PATH + "/totp", requestOptions);
+            utils_1.debug("Sending OTP");
+            return utils_1.fetch("" + BASE_API_URL + LOGIN_URL_PATH + "/totp", requestOptions, userAgent);
         })
             .then(function (res) { return res.json(); })
             .then(function (res) {
             if (!res.sessionId)
                 return reject(res.statusText);
-            utils_1.debug('Login response: ', JSON.stringify(res, null, 2));
+            utils_1.debug("Login response: ", JSON.stringify(res, null, 2));
             resolve(res);
         })
             .catch(reject);

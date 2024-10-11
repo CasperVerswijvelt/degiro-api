@@ -1,3 +1,4 @@
-import { OrderType, AccountDataType, AccountConfigType, CreateOrderResultType } from '../types';
-export declare function createOrderRequest(order: OrderType, accountData: AccountDataType, accountConfig: AccountConfigType): Promise<CreateOrderResultType>;
+import { OrderType, CreateOrderResultType } from "../types";
+import { DeGiro } from "../DeGiro";
+export declare function createOrderRequest(order: OrderType, { accountData, accountConfig, userAgent }: DeGiro): Promise<CreateOrderResultType>;
 //# sourceMappingURL=createOrderRequest.d.ts.map

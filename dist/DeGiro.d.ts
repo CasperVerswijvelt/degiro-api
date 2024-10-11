@@ -1,5 +1,5 @@
-import { DeGiroClassInterface } from './interfaces';
-import { DeGiroSettupType, AccountConfigType, AccountDataType, CashFoundType, SearchProductResultType, GetPorfolioConfigType, SearchProductOptionsType, OrderType, CreateOrderResultType, IsLoginOptionsType, GetOrdersConfigType, GetOrdersResultType, GetAccountStateOptionsType, AccountReportsType, AccountInfoType, GetHistoricalOrdersOptionsType, HistoricalOrdersType, FavouriteProductType, StockType, GetNewsOptionsType, NewsType, WebUserSettingType, ConfigDictionaryType, i18nMessagesType, WebSettingsType, GetPopularStocksConfigType, GetTransactionsOptionsType, TransactionType } from './types';
+import { DeGiroClassInterface } from "./interfaces";
+import { DeGiroSettupType, AccountConfigType, AccountDataType, CashFoundType, SearchProductResultType, GetPorfolioConfigType, SearchProductOptionsType, OrderType, CreateOrderResultType, IsLoginOptionsType, GetOrdersConfigType, GetOrdersResultType, GetAccountStateOptionsType, AccountReportsType, AccountInfoType, GetHistoricalOrdersOptionsType, HistoricalOrdersType, FavouriteProductType, StockType, GetNewsOptionsType, NewsType, WebUserSettingType, ConfigDictionaryType, i18nMessagesType, WebSettingsType, GetPopularStocksConfigType, GetTransactionsOptionsType, TransactionType } from "./types";
 /**
  * @class DeGiro
  * @description Main class of DeGiro Unofficial API.
@@ -8,9 +8,10 @@ export declare class DeGiro implements DeGiroClassInterface {
     private readonly username;
     private readonly pwd;
     private readonly oneTimePassword;
-    private jsessionId;
-    private accountConfig;
-    private accountData;
+    jsessionId: string | undefined;
+    accountConfig: AccountConfigType | undefined;
+    accountData: AccountDataType | undefined;
+    userAgent: string | undefined;
     constructor(params?: DeGiroSettupType);
     static create(params: DeGiroSettupType): DeGiro;
     login(): Promise<AccountDataType>;

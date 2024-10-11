@@ -1,3 +1,3 @@
-import { AccountConfigType, AccountDataType } from '../types';
-export declare function getProductsByIdsRequest(ids: string[], accountData: AccountDataType, accountConfig: AccountConfigType): Promise<any[]>;
+import { DeGiro } from "../types";
+export declare function getProductsByIdsRequest(ids: string[], { accountData, accountConfig, userAgent }: DeGiro): Promise<any[]>;
 //# sourceMappingURL=getProductsByIdsRequest.d.ts.map

@@ -1,3 +1,3 @@
-import { AccountDataType, AccountConfigType } from '../types';
-export declare function logoutRequest(accountData: AccountDataType, accountConfig: AccountConfigType): Promise<void>;
+import { DeGiro } from "../types";
+export declare function logoutRequest({ accountConfig, accountData, userAgent, }: DeGiro): Promise<void>;
 //# sourceMappingURL=logout.d.ts.map

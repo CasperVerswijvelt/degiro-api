@@ -19,22 +19,23 @@ var generateReportURIFromID_1 = require("../utils/generateReportURIFromID");
 // Importamos constantes
 var enums_1 = require("../enums");
 var GET_ACCOUNT_REPORTS_PATH = enums_1.DEGIRO_API_PATHS.GET_ACCOUNT_REPORTS_PATH;
-function getAccountReportsRequest(accountData, accountConfig) {
+function getAccountReportsRequest(_a) {
+    var accountData = _a.accountData, accountConfig = _a.accountConfig, userAgent = _a.userAgent;
     return new Promise(function (resolve, reject) {
         var requestOptions = {
             headers: {
                 Cookie: "JSESSIONID=" + accountConfig.data.sessionId + ";",
             },
-            credentials: 'include',
-            referer: 'https://trader.degiro.nl/trader/',
+            credentials: "include",
+            referer: "https://trader.degiro.nl/trader/",
         };
         // Do the request to get a account config data
         var uri = "" + accountConfig.data.paUrl + GET_ACCOUNT_REPORTS_PATH + "?intAccount=" + accountData.data.intAccount + "&sessionId=" + accountConfig.data.sessionId;
         utils_1.debug("Making request to " + uri);
-        utils_1.fetch(uri, requestOptions)
+        utils_1.fetch(uri, requestOptions, userAgent)
             .then(function (res) { return res.json(); })
             .then(function (res) {
-            utils_1.debug('Response:\n', JSON.stringify(res, null, 2));
+            utils_1.debug("Response:\n", JSON.stringify(res, null, 2));
             var data = res.data;
             // Añadimos la URL de descarga del archivo para que sea más facil en cliente
             data = data.map(function (report) { return (__assign(__assign({}, report), { uri: generateReportURIFromID_1.generateReportURIFromID(report.id, accountData, accountConfig) })); });

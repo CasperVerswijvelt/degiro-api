@@ -1,34 +1,42 @@
 // Import types
-import { AccountConfigType, AccountDataType } from '../types'
+import { AccountConfigType, AccountDataType, DeGiro } from "../types";
 
 // Import debug console log
-import { debug, fetch } from '../utils'
+import { debug, fetch } from "../utils";
 
 // tslint:disable-next-line: max-line-length
-export function getProductsByIdsRequest(ids: string[], accountData: AccountDataType, accountConfig: AccountConfigType): Promise<any[]> {
+export function getProductsByIdsRequest(
+  ids: string[],
+  { accountData, accountConfig, userAgent }: DeGiro
+): Promise<any[]> {
   return new Promise((resolve, reject) => {
-
     const requestOptions: {
-      method?: string,
-      body?: string,
+      method?: string;
+      body?: string;
       headers: {
-        [key: string]: string,
-      },
-      credentials: 'include',
-      referer: string,
+        [key: string]: string;
+      };
+      credentials: "include";
+      referer: string;
     } = {
-      method: 'POST',
-      body: JSON.stringify(ids.map(id => id.toString())),
+      method: "POST",
+      body: JSON.stringify(ids.map((id) => id.toString())),
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
       },
-      credentials: 'include',
-      referer: 'https://trader.degiro.nl/trader/',
-    }
+      credentials: "include",
+      referer: "https://trader.degiro.nl/trader/",
+    };
 
-    fetch(`${accountConfig.data.productSearchUrl}v5/products/info?intAccount=${accountData.data.intAccount}&sessionId=${accountConfig.data.sessionId}`, requestOptions)
-      .then(res => res.json())
-      .then(res => resolve(res.data))
-      .catch(reject)
-  })
+    fetch(
+      `${accountConfig!.data.productSearchUrl}v5/products/info?intAccount=${
+        accountData!.data.intAccount
+      }&sessionId=${accountConfig!.data.sessionId}`,
+      requestOptions,
+      userAgent
+    )
+      .then((res) => res.json())
+      .then((res) => resolve(res.data))
+      .catch(reject);
+  });
 }

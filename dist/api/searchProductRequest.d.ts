@@ -1,3 +1,3 @@
-import { SearchProductOptionsType, AccountConfigType, AccountDataType, SearchProductResultType } from '../types';
-export declare function searchProductRequest(options: SearchProductOptionsType, accountData: AccountDataType, accountConfig: AccountConfigType): Promise<SearchProductResultType[]>;
+import { SearchProductOptionsType, SearchProductResultType, DeGiro } from "../types";
+export declare function searchProductRequest(options: SearchProductOptionsType, { accountData, accountConfig, userAgent }: DeGiro): Promise<SearchProductResultType[]>;
 //# sourceMappingURL=searchProductRequest.d.ts.map

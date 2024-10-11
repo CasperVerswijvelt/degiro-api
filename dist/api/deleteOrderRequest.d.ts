@@ -1,3 +1,3 @@
-import { AccountDataType, AccountConfigType } from '../types';
-export declare function deleteOrderRequest(orderId: String, accountData: AccountDataType, accountConfig: AccountConfigType): Promise<void>;
+import { DeGiro } from "../DeGiro";
+export declare function deleteOrderRequest(orderId: String, { accountConfig, accountData, userAgent }: DeGiro): Promise<void>;
 //# sourceMappingURL=deleteOrderRequest.d.ts.map

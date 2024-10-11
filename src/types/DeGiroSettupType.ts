@@ -1,6 +1,7 @@
 export type DeGiroSettupType = {
-  username?: string,
-  pwd?: string,
-  oneTimePassword?: string,
-  jsessionId?: string,
-}
+  username?: string;
+  pwd?: string;
+  oneTimePassword?: string;
+  jsessionId?: string;
+  userAgent?: string;
+};

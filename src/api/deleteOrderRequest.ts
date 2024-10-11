@@ -1,41 +1,46 @@
 // Import types
-import { AccountDataType, AccountConfigType } from '../types'
+import { DeGiro } from "../DeGiro";
 
 // Import debug console log
-import { debug, fetch } from '../utils'
+import { debug, fetch } from "../utils";
 
-export function deleteOrderRequest(orderId: String, accountData: AccountDataType, accountConfig: AccountConfigType): Promise<void> {
+export function deleteOrderRequest(
+  orderId: String,
+  { accountConfig, accountData, userAgent }: DeGiro
+): Promise<void> {
   return new Promise((resolve, reject) => {
-
     const requestOptions: {
-      method?: string,
-      body?: string,
+      method?: string;
+      body?: string;
       headers: {
-        [key: string]: string,
-      },
-      credentials: 'include',
-      referer: string,
+        [key: string]: string;
+      };
+      credentials: "include";
+      referer: string;
     } = {
-      method: 'DELETE',
+      method: "DELETE",
       headers: {
-        'Content-Type': 'application/json;charset=UTF-8',
+        "Content-Type": "application/json;charset=UTF-8",
       },
-      body: '',
-      credentials: 'include',
-      referer: 'https://trader.degiro.nl/trader/',
-    }
+      body: "",
+      credentials: "include",
+      referer: "https://trader.degiro.nl/trader/",
+    };
 
     // tslint:disable-next-line: max-line-length
-    const uri = `https://trader.degiro.nl/trading/secure/v5/order/${orderId};jsessionid=${accountConfig.data.sessionId}?intAccount=${accountData.data.intAccount}&sessionId=${accountConfig.data.sessionId}`
-    debug(uri, requestOptions)
-    fetch(uri, requestOptions)
-      .then(res => res.json())
+    const uri = `https://trader.degiro.nl/trading/secure/v5/order/${orderId};jsessionid=${
+      accountConfig!!.data.sessionId
+    }?intAccount=${accountData!!.data.intAccount}&sessionId=${
+      accountConfig!!.data.sessionId
+    }`;
+    debug(uri, requestOptions);
+    fetch(uri, requestOptions, userAgent)
+      .then((res) => res.json())
       .then((res) => {
-        debug(res)
-        if (res.errors) return reject(res.errors)
-        resolve()
+        debug(res);
+        if (res.errors) return reject(res.errors);
+        resolve();
       })
-      .catch(reject)
-
-  })
+      .catch(reject);
+  });
 }

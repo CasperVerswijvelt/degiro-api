@@ -3,21 +3,22 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.deleteOrderRequest = void 0;
 // Import debug console log
 var utils_1 = require("../utils");
-function deleteOrderRequest(orderId, accountData, accountConfig) {
+function deleteOrderRequest(orderId, _a) {
+    var accountConfig = _a.accountConfig, accountData = _a.accountData, userAgent = _a.userAgent;
     return new Promise(function (resolve, reject) {
         var requestOptions = {
-            method: 'DELETE',
+            method: "DELETE",
             headers: {
-                'Content-Type': 'application/json;charset=UTF-8',
+                "Content-Type": "application/json;charset=UTF-8",
             },
-            body: '',
-            credentials: 'include',
-            referer: 'https://trader.degiro.nl/trader/',
+            body: "",
+            credentials: "include",
+            referer: "https://trader.degiro.nl/trader/",
         };
         // tslint:disable-next-line: max-line-length
         var uri = "https://trader.degiro.nl/trading/secure/v5/order/" + orderId + ";jsessionid=" + accountConfig.data.sessionId + "?intAccount=" + accountData.data.intAccount + "&sessionId=" + accountConfig.data.sessionId;
         utils_1.debug(uri, requestOptions);
-        utils_1.fetch(uri, requestOptions)
+        utils_1.fetch(uri, requestOptions, userAgent)
             .then(function (res) { return res.json(); })
             .then(function (res) {
             utils_1.debug(res);

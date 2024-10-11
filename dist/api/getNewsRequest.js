@@ -42,15 +42,16 @@ var utils_1 = require("../utils");
 // Import paths
 var enums_1 = require("../enums");
 var GET_LATESTS_NEWS_PATH = enums_1.DEGIRO_API_PATHS.GET_LATESTS_NEWS_PATH, GET_TOP_NEWS_PATH = enums_1.DEGIRO_API_PATHS.GET_TOP_NEWS_PATH;
-function getNewsRequest(options, accountData, accountConfig) {
+function getNewsRequest(options, _a) {
     var _this = this;
+    var accountData = _a.accountData, accountConfig = _a.accountConfig, userAgent = _a.userAgent;
     return new Promise(function (resolve, reject) { return __awaiter(_this, void 0, void 0, function () {
         var latest, top, _a, latestOffset, _b, latestLimit, _c, languages, params, requestOptions, latestNewsURI, topNewsURI, result, latestFetch, data, latestFetch, data, error_1;
         return __generator(this, function (_d) {
             switch (_d.label) {
                 case 0:
-                    latest = options.latest, top = options.top, _a = options.latestOffset, latestOffset = _a === void 0 ? 0 : _a, _b = options.latestLimit, latestLimit = _b === void 0 ? 20 : _b, _c = options.languages, languages = _c === void 0 ? 'es' : _c;
-                    params = '';
+                    latest = options.latest, top = options.top, _a = options.latestOffset, latestOffset = _a === void 0 ? 0 : _a, _b = options.latestLimit, latestLimit = _b === void 0 ? 20 : _b, _c = options.languages, languages = _c === void 0 ? "es" : _c;
+                    params = "";
                     params += "offset=" + latestOffset + "&";
                     params += "limit=" + latestLimit + "&";
                     params += "languages=" + languages + "&";
@@ -60,8 +61,8 @@ function getNewsRequest(options, accountData, accountConfig) {
                         headers: {
                             Cookie: "JSESSIONID=" + accountConfig.data.sessionId + ";",
                         },
-                        credentials: 'include',
-                        referer: 'https://trader.degiro.nl/trader/',
+                        credentials: "include",
+                        referer: "https://trader.degiro.nl/trader/",
                     };
                     latestNewsURI = "" + accountConfig.data.companiesServiceUrl + GET_LATESTS_NEWS_PATH + "?" + params;
                     topNewsURI = "" + accountConfig.data.companiesServiceUrl + GET_TOP_NEWS_PATH + "?" + params;
@@ -77,7 +78,7 @@ function getNewsRequest(options, accountData, accountConfig) {
                 case 1:
                     _d.trys.push([1, 8, , 9]);
                     if (!latest) return [3 /*break*/, 4];
-                    return [4 /*yield*/, utils_1.fetch(latestNewsURI, requestOptions)];
+                    return [4 /*yield*/, utils_1.fetch(latestNewsURI, requestOptions, userAgent)];
                 case 2:
                     latestFetch = _d.sent();
                     return [4 /*yield*/, latestFetch.json()];
@@ -87,7 +88,7 @@ function getNewsRequest(options, accountData, accountConfig) {
                     _d.label = 4;
                 case 4:
                     if (!top) return [3 /*break*/, 7];
-                    return [4 /*yield*/, utils_1.fetch(topNewsURI, requestOptions)];
+                    return [4 /*yield*/, utils_1.fetch(topNewsURI, requestOptions, userAgent)];
                 case 5:
                     latestFetch = _d.sent();
                     return [4 /*yield*/, latestFetch.json()];

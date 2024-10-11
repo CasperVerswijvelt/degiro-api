@@ -1,4 +1,4 @@
-import { AccountDataType, AccountConfigType } from '../types';
+import { AccountDataType, AccountConfigType } from "../types";
 /**
  * Generate a download URL to the report with the `id` identifier
  * @param id Report id to generate download URL
